@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oraclewdp7.ChildMapper">
+	
+	<resultMap type="com.oraclewdp7.Child" id="simpleChildMap">
+		<id column="id" property="id"></id>
+		<result column="name" property="name"/>
+	</resultMap>
+	
+	<resultMap type="com.oraclewdp7.Child" id="childMap" extends="simpleChildMap">
+		<collection property="groups" column="id" select="com.oraclewdp7.GroupMapper.getGroupsByChildId"></collection>
+	</resultMap>
+	
+	<select id="getChildsByGroupId" parameterType="int" resultMap="childMap">
+		select c.* from child c 
+		INNER join child_group cg on c.id=cg.child_id
+	    INNER JOIN groups g on cg.group_id=g.id
+	    where g.id = #{id}
+	</select>
+</mapper>

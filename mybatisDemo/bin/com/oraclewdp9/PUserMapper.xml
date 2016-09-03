@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oraclewdp9.PUserMapper">
+
+	<select id="getUserCount" parameterMap="userProcedureMap" statementType="CALLABLE">
+		CALL mybatis_demo.get_user_count(?,?)
+	</select>
+	
+	<!-- 注意，一定要指定jdbcType类型 -->
+	<parameterMap type="java.util.Map" id="userProcedureMap">
+		<parameter property="name" mode="IN" jdbcType="VARCHAR"/>
+		<parameter property="num" mode="OUT" jdbcType="INTEGER"/>
+	</parameterMap>
+
+	<!-- 下面是  数据库字段类型  java类型  jdbcType类型 之间的对应关系-->	
+	<!-- <resultMap type="java.util.Map" id="resultjcm">
+  <result property="FLD_NUMBER" column="FLD_NUMBER"  javaType="double" jdbcType="NUMERIC"/>
+  <result property="FLD_VARCHAR" column="FLD_VARCHAR" javaType="string" jdbcType="VARCHAR"/>
+  <result property="FLD_DATE" column="FLD_DATE" javaType="java.sql.Date" jdbcType="DATE"/>
+  <result property="FLD_INTEGER" column="FLD_INTEGER"  javaType="int" jdbcType="INTEGER"/>
+  <result property="FLD_DOUBLE" column="FLD_DOUBLE"  javaType="double" jdbcType="DOUBLE"/>
+  <result property="FLD_LONG" column="FLD_LONG"  javaType="long" jdbcType="INTEGER"/>
+  <result property="FLD_CHAR" column="FLD_CHAR"  javaType="string" jdbcType="CHAR"/>
+  <result property="FLD_BLOB" column="FLD_BLOB"  javaType="[B" jdbcType="BLOB" />
+  <result property="FLD_CLOB" column="FLD_CLOB"  javaType="string" jdbcType="CLOB"/>
+  <result property="FLD_FLOAT" column="FLD_FLOAT"  javaType="float" jdbcType="FLOAT"/>
+  <result property="FLD_TIMESTAMP" column="FLD_TIMESTAMP"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+ </resultMap> -->
+</mapper>

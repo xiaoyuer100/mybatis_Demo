@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oraclewdp6.CarMapper">
+	
+	<resultMap type="com.oraclewdp6.Car" id="carMap">
+		<id column="id" property="id"></id>
+		<result column="name" property="name"/>
+	</resultMap>
+	
+</mapper>

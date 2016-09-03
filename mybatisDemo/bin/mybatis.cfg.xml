@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 
+	development : 开发模式
+	work : 工作模式
+ -->
+ <properties resource="db.properties"></properties>
+
+<settings>
+ 	 <!-- 打开延迟加载的开关 -->
+	 <setting name="lazyLoadingEnabled" value="true"/> 
+	 <!-- 将积极加载改为消极加载(及按需加载) -->
+ 	<setting name="aggressiveLazyLoading" value="false"/>
+ </settings>
+
+ <typeAliases>
+ 	<!-- 为某一个类取别名  -->
+ 	<typeAlias type="com.oraclewdp.User" alias="user"/>
+ 	<!-- 为某个包取个别名,以后类名只需取类的简单名字 -->
+ 	<package name="com.oraclewdp"/>
+ </typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/oraclewdp/UserMapper.xml" />
+		<mapper resource="com/oraclewdp3/OrderMapper.xml" />
+		<mapper class="com.oraclewdp2.UserMapper"/>
+		<mapper resource="com/oraclewdp4/TeacherMapper.xml"></mapper>
+		<mapper resource="com/oraclewdp4/ClassesMapper.xml"></mapper>
+		<mapper resource="com/oraclewdp5/IDCardMapper.xml"/>
+		<mapper resource="com/oraclewdp5/StudentMapper.xml"/>
+		<mapper resource="com/oraclewdp6/CarMapper.xml"/>
+		<mapper resource="com/oraclewdp6/PersionMapper.xml"/>
+		<mapper resource="com/oraclewdp7/ChildMapper.xml"/>
+		<mapper resource="com/oraclewdp7/GroupMapper.xml"/>
+		<mapper resource="com/oraclewdp8/OrderMapperDynamicSQL.xml"/>
+		<mapper resource="com/oraclewdp9/PUserMapper.xml"/>
+	</mappers>
+</configuration>

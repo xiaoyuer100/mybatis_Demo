@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oraclewdp5.IDCardMapper">
+	<resultMap type="com.oraclewdp5.IDCard" id="idcardMap">
+		<id column="i_id" property="id"></id>
+		<result column="i_no" property="no"/>
+		<association property="student" column="i_id" select="getStudent" javaType="com.oraclewdp5.Student"></association>
+	</resultMap>
+
+	<select id="getStudent" parameterType="int" resultMap="com.oraclewdp5.StudentMapper.studentMap">
+		select * from student where idcard_id = #{id}
+	</select>
+	
+	<select id="selectIdCard" parameterType="int" resultMap="idcardMap">
+		select * from idcard where i_id = #{id}
+	</select>
+</mapper>

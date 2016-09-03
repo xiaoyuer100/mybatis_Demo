@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oraclewdp8.OrderMapperDynamicSQL">
+
+	<resultMap type="com.oraclewdp3.Order" id="orderMap">
+		<id column="order_id" property="id"></id>
+		<result column="order_no" property="no"/>
+		<result column="order_price" property="price"/>
+	</resultMap>
+
+	<!-- 动态语句-if的执行 -->
+	<select id="selectOrderIf" parameterType="hashmap" resultMap="orderMap">
+		select * from orders 
+		where 1=1
+		<if test="price!=null">
+			and order_price > #{price}
+		</if>
+	</select>
+	
+	<!-- 动态语句-choose的执行 -->
+	<select id="selectOrderChoose" parameterType="hashmap" resultMap="orderMap">
+		select * from orders
+		where 1=1
+		<choose>
+			<when test="no!=null">
+				and order_no= #{no}
+			</when>
+			<when test="price!=null">
+				and order_price>20
+			</when>
+			<otherwise>
+				and order_id>100
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 动态语句-where的执行 -->
+	<select id="selectOrderWhere" parameterType="hashmap" resultMap="orderMap">
+		select * from orders
+		<where>
+			<choose>
+				<when test="no!=null">
+					 order_no= #{no}
+				</when>
+			<when test="price!=null">
+				and order_price>20
+			</when>
+			<otherwise>
+				and order_id>100
+			</otherwise>
+		</choose>
+		</where>
+	</select>
+	
+	<!-- 动态语句-trim的执行 -->
+	<select id="selectOrderTrim" parameterType="hashmap" resultMap="orderMap" >
+		select * from orders
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<choose>
+				<when test="no!=null">
+					 order_no= #{no}
+				</when>
+			<when test="price!=null">
+				and order_price>20
+			</when>
+			<otherwise>
+				and order_id>100
+			</otherwise>
+		</choose>
+	 </trim>
+	</select>
+	
+	<!-- 动态语句-set -->
+	<update id="updateOrderSet" parameterType="hashmap">
+		update orders 
+		<set>
+			 <if test="no!=null">order_no= #{no}</if>
+			<if test="price!=null">order_price= #{price}</if>
+		</set>
+		where order_id= #{id}
+	</update>
+	
+	<select id="selectOrderForeach" parameterType="list" resultMap="orderMap">
+		select * from orders
+		where order_id in
+		<foreach collection="list" item="item" index="index" open="("
+			close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+	
+	
+	<!-- include -->
+	<sql id="columnOrder">
+		order_id,order_no,order_price
+	</sql>
+	
+	<select id="selectOrderInclude" parameterType="list" resultMap="orderMap">
+		select <include refid="columnOrder"/> from orders where order_id = #{id}
+	</select>
+	
+	
+</mapper>

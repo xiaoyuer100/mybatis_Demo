@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oraclewdp6.PersionMapper">
+
+	<resultMap type="com.oraclewdp6.Person" id="personMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="cars" column="id" select="getCar"></collection>
+	</resultMap>
+	
+	<select id="getCar" parameterType="int" resultMap="com.oraclewdp6.CarMapper.carMap">
+		select * from car where personId = #{id}
+	</select>
+	
+	<select id="selectOnePerson" parameterType="int" resultMap="personMap">
+		select * from person where id = #{id}
+	</select>
+	
+	
+</mapper>

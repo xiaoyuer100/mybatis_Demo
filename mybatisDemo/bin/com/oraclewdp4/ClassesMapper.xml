@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oraclewdp4.ClassesMapper">
+	<!-- 一对一   嵌套查询 -->
+	<resultMap type="com.oraclewdp4.Classes" id="classesMap">
+ 		<id column="c_id" property="id"></id>
+ 		<result column="c_name" property="name"/>
+ 		<association property="teacher" column="teacher_id" select="getTeacher"></association>
+ 	</resultMap>
+ 	
+ 	
+ 	<select id="getTeacher" parameterType="int" resultMap="com.oraclewdp4.TeacherMapper.teacherMap">
+ 		select * from teacher where t_id = #{id}
+ 	</select>
+ 	
+ 	<select id="selectOneClasses" parameterType="int" resultMap="classesMap">
+ 		select * from class where c_id = #{id}
+ 	</select> 
+ 	
+ 	<!-- 一对一 嵌套结果 -->
+ 	<resultMap type="com.oraclewdp4.Classes" id="classesMap2">
+ 		<id column="c_id" property="id"></id>
+ 		<result column="c_name" property="name"/>
+ 		<association property="teacher" resultMap="com.oraclewdp4.TeacherMapper.teacherMap"></association>
+ 	</resultMap>
+ 	
+ 	<select id="selectOneClasses2" parameterType="int" resultMap="classesMap2">
+ 		select * from teacher t,class c where c.teacher_id=t.t_id
+ 	</select>
+</mapper>
